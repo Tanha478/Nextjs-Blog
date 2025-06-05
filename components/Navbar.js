@@ -1,7 +1,8 @@
 "use client"
+import { useRouter } from 'next/navigation';
 import React from 'react'
 import Link from 'next/link';
-import { Button } from "@/components/ui/button"
+import { Button } from "../components/ui/button"
 import {
     Sheet,
     SheetContent,
@@ -9,7 +10,7 @@ import {
     SheetHeader,
     SheetTitle,
     SheetTrigger,
-} from "@/components/ui/sheet"
+} from "../components/ui/sheet"
 
 import { ModeToggle } from './theme-btn';
 import LoadingBar from 'react-top-loading-bar';
@@ -18,8 +19,9 @@ import { useEffect, useState } from 'react';
 
 
 
-const Navbar = () => {
 
+const Navbar = () => {
+const router = useRouter();
     const [progress, setProgress] = useState(0)
     const pathname = usePathname()
 
@@ -43,6 +45,13 @@ const Navbar = () => {
        setProgress(0)
       }, 50);
     }, [])
+
+    async function handleLogout() {
+  await fetch('/auth/signout', {
+    method: 'POST',
+  })
+  router.push('/login')
+}
     
     
     return (
@@ -54,7 +63,7 @@ const Navbar = () => {
       />
             <div className="container mx-auto flex justify-between items-center">
                 <Link href={"/"}><div className="text-lg font-bold">
-                    HarryBlog
+                    SahilBlog
                 </div></Link>
                 <div className="hidden md:flex space-x-4 items-center">
                     <Link href="/" className="hover:scale-105 hover:font-semibold transition-transform duration-300"> Home
@@ -69,8 +78,7 @@ const Navbar = () => {
                         Contact
                     </Link>
                     <div className='flex items-center'>
-                        <Button className="mx-1" variant="outline">Login</Button>
-                        <Button className="mx-1" variant="outline">Signup</Button>
+                        <Button className="mx-1" onClick={handleLogout} variant="outline">LogOut</Button>
                         <ModeToggle />
                     </div>
                 </div>
@@ -87,7 +95,7 @@ const Navbar = () => {
                         </SheetTrigger>
                         <SheetContent>
                             <SheetHeader>
-                                <SheetTitle className="font-bold my-4">HarryBlog</SheetTitle>
+                                <SheetTitle className="font-bold my-4">SahilBlog</SheetTitle>
                                 <SheetDescription>
                                     <div className="flex flex-col gap-6">
                                         <Link href="/"> Home
@@ -102,9 +110,8 @@ const Navbar = () => {
                                             Contact
                                         </Link>
                                         <div>
-                                            <Button className="mx-1 text-xs" variant="outline">Login</Button>
-                                            <Button className="mx-1 text-xs" variant="outline">Signup</Button>
-
+                                            <Button className="mx-1 text-xs" onClick={handleLogout} variant="outline">LogOut</Button>
+                                        
                                         </div>
 
                                     </div>

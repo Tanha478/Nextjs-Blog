@@ -9,7 +9,7 @@ import remarkRehype from 'remark-rehype'
 import {unified} from 'unified'
 import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from '@rehype-pretty/transformers'
-import OnThisPage from "@/components/onthispage"
+import OnThisPage from "../../../components/onthispage"
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeSlug from 'rehype-slug'
 
@@ -56,15 +56,21 @@ export default async function Page({ params }) {
 
 
     return (
-        <div className="max-w-6xl mx-auto p-4">
+        <div className="max-w-6xl mx-auto p-4 grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="md:col-span-3">
+
             <h1 className="text-4xl font-bold mb-4">{data.title}</h1>
             <p className="text-base mb-2 border-l-4 border-gray-500 pl-4 italic">&quot;{data.description}&quot;</p>
             <div className="flex gap-2">
                 <p className="text-sm text-gray-500 mb-4 italic">By {data.author}</p>
                 <p className="text-sm text-gray-500 mb-4">{data.date}</p>
             </div>
-            <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="prose dark:prose-invert"></div>
-            <OnThisPage htmlContent={htmlContent}/>
+            <div dangerouslySetInnerHTML={{ __html: htmlContent }} className="prose dark:prose-invert "></div>
+            
+            {/* <div className="md:col-span-1 mt-8">
+            <OnThisPage className="absolute right-0" htmlContent={htmlContent}/>
+            </div> */}
+        </div>
         </div>
     )
 }
